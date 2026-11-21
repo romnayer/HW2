@@ -82,7 +82,7 @@ public class BigramModel {
     public String[] buildVocabularyIndex(String fileName) throws IOException { 
         String[] vocabulary = new String[MAX_VOCABULARY_SIZE];
         int count = 0;
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        BufferedReader reader = new BufferedReader(new java.io.FileReader(fileName));
         String line;
         while ((line = reader.readLine()) != null) {
             String[] words = line.trim().split("\\s+");
