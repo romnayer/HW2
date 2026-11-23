@@ -129,11 +129,12 @@ public class BigramModel {
                     counts[x][y]++;
 
                 }
-                reader.close();
+                
 
 
             }
         }
+        reader.close();
         return counts;
     }
 
