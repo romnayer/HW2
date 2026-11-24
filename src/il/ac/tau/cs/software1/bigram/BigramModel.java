@@ -2,6 +2,7 @@ package il.ac.tau.cs.software1.bigram;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Locale;
@@ -84,7 +85,7 @@ public class BigramModel {
     public String[] buildVocabularyIndex(String fileName) throws IOException { 
         String[] vocabulary = new String[MAX_VOCABULARY_SIZE];
         int count = 0;
-        BufferedReader reader = new BufferedReader(new java.io.FileReader(fileName));
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line;
         while ((line = reader.readLine()) != null) {
             String[] words = line.trim().split("\\s+");
@@ -115,7 +116,7 @@ public class BigramModel {
      */
     public int[][] buildCountsArray(String fileName, String[] vocabulary) throws IOException { 
         int[][] counts = new int[vocabulary.length][vocabulary.length];
-        BufferedReader reader = new BufferedReader(new java.io.FileReader(fileName));
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line;
         while ((line = reader.readLine()) != null) {
             String[] words = line.trim().split("\\s+");
@@ -172,9 +173,35 @@ public class BigramModel {
     /*
      * @pre: fileName is a legal file path
      */
-    public void loadModel(String fileName) throws IOException { // Question 4
-        // TODO: implement
+    public void loadModel(String fileName) throws IOException { 
+        BufferedReader reader1 = new BufferedReader(new FileReader(fileName + ".voc"));
+        String line;
+        String firstLine = reader1.readLine();
+        String[] parts = firstLine.trim().split("\\s+");
+        int n = Integer.parseInt(parts[0]);
+        mVocabulary = new String[n];
+        int i = 0;
+        while ((line = reader1.readLine()) != null) {
+            String[] words = line.split(",");
+            mVocabulary[i] = words[1];
+            i++;
+        }
+        reader1.close();
+
+        mBigramCounts = new int[n][n];
+        BufferedReader reader2 = new BufferedReader(new FileReader(fileName + ".counts"));
+        while ((line = reader2.readLine()) != null) {
+            String[] list1 = line.split("[,:]");
+            int x = Integer.parseInt(list1[0]);
+            int y = Integer.parseInt(list1[1]);
+            int z = Integer.parseInt(list1[2]);
+            mBigramCounts[x][y] = z;
+             
+        }
+        reader2.close(); 
     }
+        
+    
 
     /*
      * @pre: sentence is in lowercase
