@@ -209,9 +209,35 @@ public class BigramModel {
      * @pre: each two words in the sentence are separated with a single space
      * @post: if sentence is probable, according to the model, $ret = true, else, $ret = false
      */
-    public boolean isLegalSentence(String sentence) { // Question 5
-        // TODO: implement
-        return false;
+    public boolean isLegalSentence(String sentence) { 
+        if (sentence.length() == 0) {
+            return true;
+        }
+
+        String[] words = sentence.split("\\s+");
+
+        if (words.length == 1) {
+           for (int i = 0; i < mVocabulary.length; i++) {
+                if (words[0].equals(mVocabulary[i])) {
+                    return true;
+                }
+            } 
+            return false;
+        }
+        
+        for (int j = 0; j < words.length-1; j++) {
+            String s1 = words[j];
+            String s2 = words[j+1];
+            int x = findIndex(mVocabulary,s1);
+            int y = findIndex(mVocabulary,s2);
+            if (x == -1 || y == -1) {
+                return false;
+            }
+            if (mBigramCounts[x][y] == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////
