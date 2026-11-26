@@ -48,8 +48,8 @@ public class PacmanPlayer extends PacmanGameObject {
 			float current_weight = inventoryComponent.getInventory().getTotalWeight();
 			float bonus_weight = collectible.getWeight();
 			float max_weight = inventoryComponent.getMaxWeight();
-			if (current_weight + bonus_weight = max_weight) {
-				bonus.getTransformComponent().position = inventoryComponent.getInventoryPosition;
+			if (current_weight + bonus_weight <= max_weight) {
+				bonus.getTransformComponent().position = inventoryComponent.getInventoryPosition();
 			    inventoryComponent.getInventory().collect(collectible);
 				addScore(bonus.bonusScore);
 				
